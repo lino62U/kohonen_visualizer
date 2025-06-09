@@ -1,0 +1,43 @@
+# Carpetas comunes a ignorar
+/build/
+/CMakeFiles/
+/cmake-build-*/
+
+# Archivos generados por CMake
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+compile_commands.json
+
+# Archivos ejecutables (Linux/macOS)
+*.out
+*.o
+*.so
+*.a
+*.dylib
+
+# Ejecutables Windows
+*.exe
+*.dll
+*.lib
+
+# Archivos temporales de editores
+*~
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Archivos de depuración
+core
+vgcore.*
+
+# Archivos de logs
+*.log
+
+# Archivos de IDEs
+.vscode/
+.idea/
+*.user
+*.workspace
+*.code-workspace
