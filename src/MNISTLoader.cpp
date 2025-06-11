@@ -41,7 +41,7 @@ std::vector<std::vector<float>> MNISTDataset::loadImages(const std::string& file
     return images;
 }
 
-std::vector<std::vector<float>> MNISTDataset::loadLabels(const std::string& filename, int max_labels) {
+std::vector<int> MNISTDataset::loadLabels(const std::string& filename, int max_labels) {
     std::ifstream file(filename, std::ios::binary);
     if (!file) throw std::runtime_error("Cannot open MNIST labels file: " + filename);
 
@@ -58,22 +58,19 @@ std::vector<std::vector<float>> MNISTDataset::loadLabels(const std::string& file
         num_labels = max_labels;
     }
 
-    std::vector<std::vector<float>> labels;
+    std::vector<int> labels;
     labels.reserve(num_labels);
 
     for (int i = 0; i < num_labels; ++i) {
         uint8_t label;
         file.read(reinterpret_cast<char*>(&label), 1);
-
         if (label > 9) throw std::runtime_error("Label out of range");
-
-        std::vector<float> one_hot(10, 0.0f);
-        one_hot[label] = 1.0f;
-        labels.push_back(std::move(one_hot));
+        labels.push_back(static_cast<int>(label));
     }
 
     return labels;
 }
+
 
 void MNISTDataset::displayImage(const std::vector<float>& image, int rows, int cols) {
     const std::string shades = " .:-=+*#%@";

@@ -15,6 +15,9 @@ if(NOT SOIL_INCLUDE_DIR OR NOT SOIL_LIBRARY)
     message(FATAL_ERROR "SOIL no encontrado. Asegúrate de que está instalado.")
 endif()
 
+# Buscar OpenMP
+find_package(OpenMP REQUIRED)
+
 # Incluir directorios
 include_directories(
     include
@@ -35,4 +38,5 @@ target_link_libraries(kohonen_visualizer
     ${GLUT_LIBRARIES}
     GLU
     ${SOIL_LIBRARY}
+    OpenMP::OpenMP_CXX
 )
