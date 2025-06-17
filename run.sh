@@ -11,13 +11,11 @@ function compilar() {
 
 function ejecutar_tests() {
     echo "== Ejecutando tests =="
-    if [ ! -d build ]; then
-        echo "No existe la carpeta build, compilando primero..."
+    if [ ! -f build/alineador ]; then
+        echo "No está compilado el ejecutable, compilando primero..."
         compilar
     fi
-    cd build
-    CTEST_OUTPUT_ON_FAILURE=1 ctest --output-on-failure
-    cd ..
+    ./build/kohonen_test
 }
 
 function ejecutar_main() {

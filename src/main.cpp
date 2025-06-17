@@ -28,8 +28,8 @@ int main(int argc, char **argv)
   auto labels = MNISTDataset::loadLabels(dataset_path + "train-labels.idx1-ubyte", samples);
 
   kohonenNet = new Kohonen3D(10, 10, 10, 28 * 28);
-  kohonenNet->train(images, 2, 0.1f, 3.0f);
-
+  kohonenNet->train(images, labels, 5, 0.1f, 3.0f);
+  kohonenNet->saveModel("save_models/kohonen-5-epochs.txt");
   visualizer = new KohonenVisualizer(kohonenNet);
   visualizer->initGL();
   visualizer->initNeurons();
@@ -40,13 +40,6 @@ int main(int argc, char **argv)
   glutMotionFunc(motionWrapper);
   glutKeyboardFunc(keyboardWrapper);
 
-  // for (int i = 0; i < images.size(); i++)
-  // {
-  //   std::cout<<"index: "<<i<<" label: "<<labels[i]<<std::endl;
-  // }
-
-  std::cout << "Label de prueba" << labels[4983] << std::endl;
-  visualizer->highlightInput(images[4983]);
   glutMainLoop();
 
   delete visualizer;

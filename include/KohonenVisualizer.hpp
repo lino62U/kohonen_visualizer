@@ -20,6 +20,9 @@ public:
   void highlightInput(const std::vector<float> &input);
   int highlightedNeuronIndex = -1;
 
+  void setCurrentInput(const std::vector<float> &input);
+  void renderInputDigit();
+
 private:
   struct Neuron
   {
@@ -29,10 +32,10 @@ private:
   };
 
   GLuint createTextureFromMNIST(const std::vector<float> &image, int width, int height);
-  void drawTexturedQuad(float x, float y, float z, GLuint textureID, bool isSelected, const float * color);
+  void drawTexturedQuad(float x, float y, float z, GLuint textureID, bool isSelected, const float *color);
   std::vector<Neuron> neurons;
   Kohonen3D *kohonenNet;
-
+  std::vector<float> currentInput; // Store current input image
   float zoom = -15.0f, angleX = 20.0f, angleY = -30.0f;
   int lastX = 0, lastY = 0;
   bool mouseDown = false;

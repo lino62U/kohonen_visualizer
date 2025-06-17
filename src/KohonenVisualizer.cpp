@@ -217,5 +217,35 @@ void KohonenVisualizer::highlightInput(const std::vector<float> &input)
 {
   int bmuIndex = kohonenNet->findBMU(input);
   highlightedNeuronIndex = bmuIndex;
+  currentInput = input;
   glutPostRedisplay();
+}
+void KohonenVisualizer::renderInputDigit()
+{
+  glClear(GL_COLOR_BUFFER_BIT);
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  gluOrtho2D(0, 28, 0, 28);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+
+  // Render 28x28 image
+  glBegin(GL_QUADS);
+  for (int y = 0; y < 28; ++y)
+  {
+    for (int x = 0; x < 28; ++x)
+    {
+      float pixel = currentInput[y * 28 + x];
+      glColor3f(pixel, pixel, pixel);
+      glVertex2f(x, 28 - y - 1);
+      glVertex2f(x + 1, 28 - y - 1);
+      glVertex2f(x + 1, 28 - y);
+      glVertex2f(x, 28 - y);
+    }
+  }
+  glEnd();
+}
+void KohonenVisualizer::setCurrentInput(const std::vector<float> &input)
+{
+  currentInput = input;
 }
