@@ -29,7 +29,7 @@ function ejecutar_main() {
     if [ $# -eq 0 ]; then
         echo "Usando parámetros por defecto:"
         echo "Dimensiones: 10x10x10 | Epochs: 5 | LR: 0.1 | Radius: 3.0 | Samples: 5000 | Labels: 10000"
-        ./build/kohonen_visualizer 10 10 10 5 0.1 3.0 5000 10000
+        ./build/kohonen_visualizer 10 10 10 3 0.1 3.0 1000 10000
     elif [ $# -eq 8 ]; then
         ./build/kohonen_visualizer "$@"
     else

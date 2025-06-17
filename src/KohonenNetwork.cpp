@@ -5,6 +5,7 @@
 #include <random>
 #include <fstream>
 #include <sstream>
+#include <iomanip>
 
 Kohonen3D::Kohonen3D(int sizeX, int sizeY, int sizeZ, int input_dim)
     : sizeX_(sizeX), sizeY_(sizeY), sizeZ_(sizeZ), input_dim_(input_dim),
@@ -54,11 +55,26 @@ void Kohonen3D::precomputeNeuronDistances()
     }
   }
 }
+
+
 void Kohonen3D::train(const std::vector<Vector> &data, const std::vector<int> &labels,
                       int epochs, float learning_rate_initial, float neighborhood_radius_initial)
 {
     const int total_neurons = sizeX_ * sizeY_ * sizeZ_;
     const int input_size = input_dim_;
+
+    std::cout << "========== Entrenamiento Kohonen ==========\n";
+    std::cout << std::fixed << std::setprecision(4);
+    std::cout << "Total épocas: " << epochs << ", Neuronas: " << total_neurons << ", Dimensión entrada: " << input_size << "\n\n";
+
+    std::cout << std::left
+              << std::setw(12) << "Epoch"
+              << std::setw(15) << "Accuracy (%)"
+              << std::setw(15) << "LR"
+              << std::setw(15) << "Radius"
+              << "\n";
+
+    std::cout << std::string(57, '-') << "\n";
 
     for (int epoch = 0; epoch < epochs; epoch++)
     {
@@ -87,13 +103,21 @@ void Kohonen3D::train(const std::vector<Vector> &data, const std::vector<int> &l
             }
         }
 
-        // Optional: Compute accuracy during training
         float accuracy = computeAccuracy(data, labels);
-        std::cout << "Epoch " << epoch + 1 << " - Accuracy: " << accuracy * 100
-                  << "%, LR: " << lr << ", Radius: " << radius << std::endl;
+
+        std::ostringstream epoch_str;
+        epoch_str << "[" << epoch + 1 << "/" << epochs << "]";
+
+        std::cout << std::setw(12) << epoch_str.str()
+                  << std::setw(15) << accuracy * 100.0f
+                  << std::setw(15) << lr
+                  << std::setw(15) << radius
+                  << "\n";
     }
 
-    // Assign labels to neurons after training
+    std::cout << std::string(57, '-') << "\n";
+    std::cout << "Entrenamiento finalizado. Asignando etiquetas a las neuronas...\n";
+
     assignLabels(data, labels);
 }
 
