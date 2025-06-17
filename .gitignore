@@ -41,3 +41,5 @@ vgcore.*
 *.user
 *.workspace
 *.code-workspace
+
+data/

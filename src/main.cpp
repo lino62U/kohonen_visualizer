@@ -20,9 +20,10 @@ void printUsage() {
     std::cout << "Ejemplo: ./kohonen3d 10 10 10 5 0.1 3.0 5000 10000\n";
 }
 
-std::string buildModelFilename(int x, int y, int z, int epochs, float lr, float radius, int samples, int labels) {
+std::string buildModelFilename(std::string dataset,int x, int y, int z, int epochs, float lr, float radius, int samples, int labels) {
     std::ostringstream ss;
     ss << "save_models/kohonen-"
+       << "-d" << dataset
        << "x" << x << "-y" << y << "-z" << z
        << "-e" << epochs
        << "-lr" << std::fixed << std::setprecision(2) << lr
@@ -68,14 +69,15 @@ int main(int argc, char **argv)
     glutCreateWindow("Kohonen 3D con MNIST");
 
     // Cargar y entrenar red
-    std::string dataset_path = "data/";
+    std::string data = "Nko_";
+    std::string dataset_path = "data/NKo/";
 
-    auto images = MNISTDataset::loadImages(dataset_path + "train-images.idx3-ubyte", samples);
-    auto labelList = MNISTDataset::loadLabels(dataset_path + "train-labels.idx1-ubyte", labels);
+    auto images = MNISTDataset::loadImages(dataset_path + data + "train-images.idx3-ubyte", samples);
+    auto labelList = MNISTDataset::loadLabels(dataset_path + data + "train-labels.idx1-ubyte", labels);
 
     kohonenNet = new Kohonen3D(dimX, dimY, dimZ, 28 * 28);
 
-    std::string filename = buildModelFilename(dimX, dimY, dimZ, epochs, learningRate, radius, samples, labels);
+    std::string filename = buildModelFilename(data, dimX, dimY, dimZ, epochs, learningRate, radius, samples, labels);
     printModelConfiguration(dimX, dimY, dimZ, epochs, learningRate, radius, samples, labels, filename);
 
     kohonenNet->train(images, labelList, epochs, learningRate, radius);

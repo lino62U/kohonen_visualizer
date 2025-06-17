@@ -82,14 +82,14 @@ int main(int argc, char **argv)
     glutCreateWindow("Kohonen 3D con MNIST");
 
     // Load and train network
-    std::string dataset_path = "data/";
+    std::string dataset_path = "data/Osmanya/";
     int samples = 5000;
 
     images = MNISTDataset::loadImages(dataset_path + "train-images.idx3-ubyte", samples);
     labels = MNISTDataset::loadLabels(dataset_path + "train-labels.idx1-ubyte", samples);
 
     kohonenNet = new Kohonen3D(10, 10, 10, 28 * 28);
-    kohonenNet->loadModel("save_models/kohonen-5-epochs.txt");
+    kohonenNet->loadModel("save_models/kohonen-x10-y10-z10-e5-lr0.05-r2.50-s8000-l8000.txt");
     visualizer = new KohonenVisualizer(kohonenNet);
     visualizer->initGL();
     visualizer->initNeurons();
